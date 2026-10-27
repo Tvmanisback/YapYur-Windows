@@ -121,7 +121,12 @@ class Updater extends EventEmitter {
       const j = await rel.json();
       const version = String(j.tag_name || '').replace(/^v/i, '');
       const asset = Array.isArray(j.assets) ? j.assets.find((a) => a && /^yapcord.*\.zip$/i.test(a.name || '') && a.browser_download_url) : null;
-      return { version, url: j.html_url || 'https://github.com/' + repo + '/releases', notes: String(j.body || '').slice(0, 1500), zipUrl: asset ? asset.browser_download_url : j.zipball_url };
+      // A release asset's browser_download_url is a direct CDN link and wants Accept: application/octet-stream
+      // to get the raw bytes back. GitHub's own /zipball/<ref> endpoint (used as a fallback below, and here when
+      // a release exists but has no matching named asset) is a normal api.github.com endpoint, not a CDN link -
+      // it only negotiates the usual application/vnd.github+json and answers 415 Unsupported Media Type to an
+      // octet-stream Accept header, so it must NOT get that header.
+      return { version, url: j.html_url || 'https://github.com/' + repo + '/releases', notes: String(j.body || '').slice(0, 1500), zipUrl: asset ? asset.browser_download_url : j.zipball_url, isAsset: !!asset };
     }
     if (rel.status !== 404) throw Updater._httpError(rel, 'the latest release');
     const meta = await this._get(api);
@@ -130,7 +135,7 @@ class Updater extends EventEmitter {
     const pkg = await this._get(api + '/contents/package.json?ref=' + encodeURIComponent(branch), { accept: 'application/vnd.github.raw+json' });
     if (!pkg.ok) throw Updater._httpError(pkg, 'package.json in ' + repo);
     const version = String(JSON.parse(await pkg.text()).version || '');
-    return { version, url: 'https://github.com/' + repo, notes: '', zipUrl: api + '/zipball/' + encodeURIComponent(branch) };
+    return { version, url: 'https://github.com/' + repo, notes: '', zipUrl: api + '/zipball/' + encodeURIComponent(branch), isAsset: false };
   }
 
   async check() {
@@ -172,7 +177,10 @@ class Updater extends EventEmitter {
     const tmp = this.nextDir + '.tmp';
     try {
       this._set({ phase: 'downloading', error: '' });
-      const res = await this._get(this.info.zipUrl, { accept: 'application/octet-stream', timeout: 120000 });
+      // Only a real release-asset CDN link wants an explicit octet-stream Accept; the api.github.com
+      // /zipball/<ref> fallback (this.info.isAsset === false) answers 415 to that header - see the comment
+      // in _latest() above.
+      const res = await this._get(this.info.zipUrl, { accept: this.info.isAsset ? 'application/octet-stream' : undefined, timeout: 120000 });
       if (!res.ok) throw Updater._httpError(res, 'the download');
       const len = Number(res.headers && res.headers.get && res.headers.get('content-length'));
       if (len > MAX_ZIP) throw new Error('The download is larger than expected.');
