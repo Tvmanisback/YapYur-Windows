@@ -1,6 +1,5 @@
 'use strict';
 const path = require('path');
-const fs = require('fs');
 const { app, BrowserWindow, Menu, Tray, nativeImage, session, shell } = require('electron');
 
 const C = require('./constants');
@@ -157,19 +156,6 @@ function main() {
     if (b.maximized) win.maximize();
 
     const wc = win.webContents;
-    wc.on('dom-ready', () => {
-      try {
-        const pluginFile = path.join(__dirname, 'yapyur-plugins.js');
-        if (!fs.existsSync(pluginFile)) {
-          log.warn('bundled ZIP plugin suite is not present; continuing with built-in plugins');
-          return;
-        }
-        const pluginSource = fs.readFileSync(pluginFile, 'utf8');
-        wc.executeJavaScript(pluginSource).catch((err) => log.warn('ZIP plugin suite injection failed:', err && err.message));
-      } catch (err) {
-        log.warn('could not load ZIP plugin suite:', err && err.message);
-      }
-    });
     win.on('page-title-updated', (event) => {
       event.preventDefault();
       if (win && !win.isDestroyed()) win.setTitle('YapYur');
