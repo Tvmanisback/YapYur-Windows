@@ -50,13 +50,19 @@ jobs:
       - name: Download and integrate plugins from the YapYur ZIP source
         shell: pwsh
         run: |
-          $pluginUrl = "https://raw.githubusercontent.com/Tvmanisback/yapyur-download/1.10.3/UserScript/YapYur.user.js"
-          Invoke-WebRequest -Uri $pluginUrl -OutFile "src/main/yapyur-plugins.js"
+          $extensionZip = "YapYur-extension.zip"
+          $extensionDir = "yapyur-extension-source"
+          $pluginUrl = "https://github.com/Tvmanisback/yapyur-download/releases/download/1.10.3/YapYur-extension.zip"
+          Invoke-WebRequest -Uri $pluginUrl -OutFile $extensionZip
+          Expand-Archive -Path $extensionZip -DestinationPath $extensionDir -Force
+          Copy-Item (Join-Path $extensionDir "content.js") "src/main/yapyur-plugins.js" -Force
           $pluginSource = [System.IO.File]::ReadAllText("src/main/yapyur-plugins.js")
           $pluginSource = $pluginSource.Replace("window.YapperMod = YM;", "window.YapYurPlugins = YM;")
           $pluginSource = $pluginSource.Replace("YM.mode = 'bookmarklet';", "YM.mode = 'desktop';")
           $pluginSource = $pluginSource.Replace("if (!def || !def.name) return null;", "if (!def || !def.name) return null;`n    if (def.name === 'MessageLogger' || def.name === 'BetterFolders') return null;")
           [System.IO.File]::WriteAllText("src/main/yapyur-plugins.js", $pluginSource, [System.Text.UTF8Encoding]::new($false))
+          Remove-Item $extensionZip -Force
+          Remove-Item $extensionDir -Recurse -Force
 
       - name: Build portable EXE
         run: npm run dist
