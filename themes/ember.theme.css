@@ -1,0 +1,76 @@
+/**
+ * @name Ember
+ * @author Tvman
+ * @version 1.0.0
+ * @description Warm charcoal with orange/amber accents. Like dying fire.
+ */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"] {
+  --bg-rail: #0c0805;
+  --bg-side: #140e08;
+  --bg-main: #1a120a;
+  --bg-elev: #22180e;
+  --bg-hover: #2c1e12;
+  --bg-active: #3a2818;
+  --bg-input: #1e160c;
+  --bg-float: #22180e;
+  --bg-side-solid: #140e08;
+  --text: #f0e8e0;
+  --text-muted: #b8a090;
+  --text-faint: #887060;
+  --border: #3a281844;
+  --accent: #ff8c00;
+  --accent-hover: #ffa533;
+  --accent-soft: #ff8c0033;
+  --on-accent: #1a0c00;
+  --danger: #ff2a2a;
+  --success: #40a02b;
+  --warning: #ff8c00;
+  --shadow: 0 10px 34px #00000066;
+  color-scheme: dark;
+  --lightningcss-light: ;
+  --lightningcss-dark: initial;
+}
+
+:root:not([data-theme="light"]) .msg:hover,
+:root:not([data-theme="light"]) .msg.menu-open,
+:root:not([data-theme="light"]) .msg.editing {
+  background: #ff8c0012;
+}
+:root:not([data-theme="light"]) .drop-overlay {
+  background: #1a120ae6;
+}
+:root:not([data-theme="light"]) .overlay {
+  background: #00000099;
+}
+:root:not([data-theme="light"]) .overlay.clear {
+  background: 0 0;
+}
+:root:not([data-theme="light"]) .voice-view {
+  background: #140e08;
+}
+:root:not([data-theme="light"]) .voice-tile.screen {
+  background: #000;
+}
+:root:not([data-theme="light"]) .status-dot.offline {
+  box-shadow: 0 0 0 3px var(--bg-side), inset 0 0 0 3px #5c4030;
+}
+:root:not([data-theme="light"]) .main .status-dot.offline {
+  box-shadow: 0 0 0 3px var(--bg-main), inset 0 0 0 3px #5c4030;
+}
+
+body::after {
+  content: "Made by Tvman";
+  position: fixed;
+  bottom: 10px;
+  right: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(255, 140, 0, 0.35);
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+  font-family: inherit;
+}

@@ -1,0 +1,76 @@
+/**
+ * @name Toxic Green
+ * @author Tvman
+ * @version 1.0.0
+ * @description Dark charcoal with neon acid green accents. Cyber / hacker feel.
+ */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"] {
+  --bg-rail: #050805;
+  --bg-side: #0a100a;
+  --bg-main: #0e140e;
+  --bg-elev: #141c14;
+  --bg-hover: #1a241a;
+  --bg-active: #222e22;
+  --bg-input: #121a12;
+  --bg-float: #141c14;
+  --bg-side-solid: #0a100a;
+  --text: #e0f0e0;
+  --text-muted: #90b890;
+  --text-faint: #5e805e;
+  --border: #1e3a1e44;
+  --accent: #39ff14;
+  --accent-hover: #5cff3d;
+  --accent-soft: #39ff1433;
+  --on-accent: #001a00;
+  --danger: #ff2a2a;
+  --success: #39ff14;
+  --warning: #ffe600;
+  --shadow: 0 10px 34px #00000066;
+  color-scheme: dark;
+  --lightningcss-light: ;
+  --lightningcss-dark: initial;
+}
+
+:root:not([data-theme="light"]) .msg:hover,
+:root:not([data-theme="light"]) .msg.menu-open,
+:root:not([data-theme="light"]) .msg.editing {
+  background: #39ff1412;
+}
+:root:not([data-theme="light"]) .drop-overlay {
+  background: #0e140ee6;
+}
+:root:not([data-theme="light"]) .overlay {
+  background: #00000099;
+}
+:root:not([data-theme="light"]) .overlay.clear {
+  background: 0 0;
+}
+:root:not([data-theme="light"]) .voice-view {
+  background: #0a100a;
+}
+:root:not([data-theme="light"]) .voice-tile.screen {
+  background: #000;
+}
+:root:not([data-theme="light"]) .status-dot.offline {
+  box-shadow: 0 0 0 3px var(--bg-side), inset 0 0 0 3px #2a4a2a;
+}
+:root:not([data-theme="light"]) .main .status-dot.offline {
+  box-shadow: 0 0 0 3px var(--bg-main), inset 0 0 0 3px #2a4a2a;
+}
+
+body::after {
+  content: "Made by Tvman";
+  position: fixed;
+  bottom: 10px;
+  right: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(57, 255, 20, 0.35);
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+  font-family: inherit;
+}

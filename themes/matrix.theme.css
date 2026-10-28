@@ -1,0 +1,76 @@
+/**
+ * @name Matrix
+ * @author Tvman
+ * @version 1.0.0
+ * @description Pure black with classic green terminal text and accents.
+ */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"] {
+  --bg-rail: #000000;
+  --bg-side: #020502;
+  --bg-main: #050805;
+  --bg-elev: #0a0f0a;
+  --bg-hover: #0f160f;
+  --bg-active: #141e14;
+  --bg-input: #080c08;
+  --bg-float: #0a0f0a;
+  --bg-side-solid: #020502;
+  --text: #00ff41;
+  --text-muted: #00cc33;
+  --text-faint: #008822;
+  --border: #00331144;
+  --accent: #00ff41;
+  --accent-hover: #33ff66;
+  --accent-soft: #00ff4133;
+  --on-accent: #000000;
+  --danger: #ff0033;
+  --success: #00ff41;
+  --warning: #ffff00;
+  --shadow: 0 10px 34px #00000088;
+  color-scheme: dark;
+  --lightningcss-light: ;
+  --lightningcss-dark: initial;
+}
+
+:root:not([data-theme="light"]) .msg:hover,
+:root:not([data-theme="light"]) .msg.menu-open,
+:root:not([data-theme="light"]) .msg.editing {
+  background: #00ff4112;
+}
+:root:not([data-theme="light"]) .drop-overlay {
+  background: #050805e6;
+}
+:root:not([data-theme="light"]) .overlay {
+  background: #000000aa;
+}
+:root:not([data-theme="light"]) .overlay.clear {
+  background: 0 0;
+}
+:root:not([data-theme="light"]) .voice-view {
+  background: #020502;
+}
+:root:not([data-theme="light"]) .voice-tile.screen {
+  background: #000;
+}
+:root:not([data-theme="light"]) .status-dot.offline {
+  box-shadow: 0 0 0 3px var(--bg-side), inset 0 0 0 3px #004411;
+}
+:root:not([data-theme="light"]) .main .status-dot.offline {
+  box-shadow: 0 0 0 3px var(--bg-main), inset 0 0 0 3px #004411;
+}
+
+body::after {
+  content: "Made by Tvman";
+  position: fixed;
+  bottom: 10px;
+  right: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(0, 255, 65, 0.35);
+  pointer-events: none;
+  z-index: 9999;
+  user-select: none;
+  font-family: inherit;
+}
