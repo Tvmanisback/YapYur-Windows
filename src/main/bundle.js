@@ -42,10 +42,14 @@ let cache = null;
 
 function readSources() {
   if (cache && !process.env.YM_DEV) return cache;
-  cache = listFiles().map((file) => ({
-    rel: path.relative(RENDERER_DIR, file).replace(/\\/g, '/'),
-    src: fs.readFileSync(file, 'utf8'),
-  }));
+  cache = listFiles().map((file) => {
+    const rel = path.relative(RENDERER_DIR, file).replace(/\\/g, '/');
+    let src = fs.readFileSync(file, 'utf8');
+    // ZIP-imported plugins were temporarily namespaced during import. Restore their
+    // original YM class names so their CSS and settings UI match the desktop core.
+    if (src.includes('Imported from the YapYur ZIP source')) src = src.replace(/yyx-/g, 'ym-');
+    return { rel, src };
+  });
   return cache;
 }
 
