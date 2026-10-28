@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const NAME = 'YapCord';
+const NAME = 'YapYur';
 const OLD_NAME = 'YapperMod';
 
 function resolveDataDir(appData, fsImpl = fs) {
