@@ -42,10 +42,10 @@ jobs:
             }
           }
 
-      - name: Generate Windows application icon
+      - name: Generate Windows application icon from SVG
         run: |
-          npm install --no-save png-to-ico
-          node -e "require('png-to-ico')('build/icon.png').then(icon => require('fs').writeFileSync('build/icon.ico', icon))"
+          npm install --no-save sharp png-to-ico
+          node --input-type=module -e "import sharp from 'sharp'; import pngToIcoModule from 'png-to-ico'; import { writeFile } from 'node:fs/promises'; const pngToIco = pngToIcoModule.default ?? pngToIcoModule; await sharp('build/icon.svg').resize(256, 256).png().toFile('build/icon.png'); await writeFile('build/icon.ico', await pngToIco('build/icon.png'));"
 
       - name: Build portable EXE
         run: npm run dist
