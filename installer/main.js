@@ -4,6 +4,7 @@ const { app, BrowserWindow, ipcMain, dialog, shell, Menu } = require('electron')
 const path = require('path');
 const core = require('./core');
 
+const INSTALLER_VERSION = '1.10.3';
 const payload = core.payloadDir(process.resourcesPath);
 const info = payload ? core.payloadInfo(payload) : { version: '', repo: '' };
 const picked = [];
@@ -19,7 +20,7 @@ const errText = (err) => (err && err.message) || String(err);
 function createWindow() {
   Menu.setApplicationMenu(null);
   win = new BrowserWindow({
-    width: 900, height: 660, minWidth: 720, minHeight: 560, backgroundColor: '#1e262e', title: 'YapCord Installer', autoHideMenuBar: true,
+    width: 900, height: 660, minWidth: 720, minHeight: 560, backgroundColor: '#1e262e', title: 'YapYur Installer v' + INSTALLER_VERSION, autoHideMenuBar: true,
     icon: [path.join(__dirname, 'icon.png'), path.join(__dirname, '..', 'build', 'icon.png')].find((f) => require('fs').existsSync(f)),
     webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true },
   });
@@ -30,7 +31,7 @@ function createWindow() {
 }
 
 ipcMain.handle('installer:info', guard(() => ({
-  version: info.version, repo: info.repo, payloadOk: !!payload,
+  version: INSTALLER_VERSION, repo: info.repo, payloadOk: !!payload,
   installs: core.scan({ extra: picked }),
 })));
 
