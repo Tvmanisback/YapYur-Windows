@@ -59,6 +59,7 @@ jobs:
           $pluginSource = [System.IO.File]::ReadAllText("src/main/yapyur-plugins.js")
           $pluginSource = $pluginSource.Replace("window.YapperMod = YM;", "window.YapYurPlugins = YM;")
           $pluginSource = $pluginSource.Replace("YM.mode = 'bookmarklet';", "YM.mode = 'desktop';")
+          $pluginSource = $pluginSource.Replace("ym-", "yyx-")
           $pluginSource = $pluginSource.Replace("if (!def || !def.name) return null;", "if (!def || !def.name) return null;`n    if (def.name === 'MessageLogger' || def.name === 'BetterFolders') return null;")
           [System.IO.File]::WriteAllText("src/main/yapyur-plugins.js", $pluginSource, [System.Text.UTF8Encoding]::new($false))
           Remove-Item $extensionZip -Force
