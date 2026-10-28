@@ -26,6 +26,22 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Apply YapYur branding to packaged UI
+        shell: pwsh
+        run: |
+          $roots = @("src", "themes")
+          $extensions = @(".js", ".html", ".css", ".json", ".md")
+          foreach ($root in $roots) {
+            Get-ChildItem $root -Recurse -File | Where-Object { $extensions -contains $_.Extension.ToLowerInvariant() } | ForEach-Object {
+              $file = $_.FullName
+              $text = [System.IO.File]::ReadAllText($file)
+              $text = $text -creplace "YapCord", "YapYur"
+              $text = $text -creplace "yapcord", "yapyur"
+              $text = $text -creplace "dev\.yapcord\.app", "tvman.unknown.yapyur"
+              [System.IO.File]::WriteAllText($file, $text, [System.Text.UTF8Encoding]::new($false))
+            }
+          }
+
       - name: Generate Windows application icon
         run: |
           npm install --no-save png-to-ico
