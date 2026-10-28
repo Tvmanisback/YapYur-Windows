@@ -37,7 +37,13 @@ function buildCss(cfg) {
     wide.push(`.app>.stage-row>nav.rail{width:${s + 24}px}.app>.stage-row>nav.rail .rail-item:not(.big){width:${s}px;height:${s}px}.app>.stage-row>nav.rail .rail-item:not(.big):not(.rail-folder):not(:hover):not(.active){border-radius:${Math.round(s / 2)}px}`);
   }
   if (c.sidebarWidth !== YAPPER_NATIVE.sidebarWidth) wide.push(`.app>.stage-row>.stage>aside.sidebar{width:${c.sidebarWidth}px}`);
-  const all = [];
+  const all = [
+    ':root{--accent:#8b5cf6;--accent-hover:#a78bfa;--accent-active:#7c3aed}',
+    '.app>.stage-row>nav.rail{background:linear-gradient(180deg,#191724 0%,#121118 100%);border-right:1px solid rgba(139,92,246,.22)}',
+    '.app>.stage-row>.stage>aside.sidebar{background:#17161f}',
+    'button:not(:disabled){transition:background-color .14s ease,border-color .14s ease,transform .14s ease}',
+    'button:not(:disabled):active{transform:translateY(1px)}'
+  ];
   if (wide.length) all.push('@media (min-width:761px){' + wide.join('\n') + '}');
   if (c.chatText !== YAPPER_NATIVE.chatText) all.push(`.msg-text{font-size:calc(1em * ${(c.chatText / 100).toFixed(2)})}`);
   if (c.messageGap !== YAPPER_NATIVE.messageGap) all.push(`.msg:not(.grouped){margin-top:${Math.round((14 * c.messageGap) / 100)}px}`);
