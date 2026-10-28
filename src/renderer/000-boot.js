@@ -23,11 +23,11 @@ function safeJson(v) {
 }
 
 YM.log = {
-  info: (...a) => (pushRing('info', a), console.log('%c[YapCord]', LOG_STYLE, ...a)),
-  warn: (...a) => (pushRing('warn', a), console.warn('%c[YapCord]', LOG_STYLE, ...a)),
-  error: (...a) => (pushRing('error', a), console.error('[YapCord]', ...a)),
+  info: (...a) => (pushRing('info', a), console.log('%c[YapYur]', LOG_STYLE, ...a)),
+  warn: (...a) => (pushRing('warn', a), console.warn('%c[YapYur]', LOG_STYLE, ...a)),
+  error: (...a) => (pushRing('error', a), console.error('[YapYur]', ...a)),
   debug: (...a) => {
-    if (YM.debug) console.debug('%c[YapCord]', LOG_STYLE, ...a);
+    if (YM.debug) console.debug('%c[YapYur]', LOG_STYLE, ...a);
   },
   recent: () => ring.slice(),
 };
