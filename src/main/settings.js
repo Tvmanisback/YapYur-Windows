@@ -78,7 +78,7 @@ class SettingsStore {
     }
     if (!fs.existsSync(this.quickCssFile)) {
       try {
-        fs.writeFileSync(this.quickCssFile, '/* YapCord Custom CSS: write your own CSS here. */\n', 'utf8');
+        fs.writeFileSync(this.quickCssFile, '/* YapYur Custom CSS: write your own CSS here. */\n', 'utf8');
       } catch (_) {
 
       }
@@ -145,7 +145,7 @@ class SettingsStore {
       fs.writeFileSync(tmp, JSON.stringify(this.data, null, 2), 'utf8');
       fs.renameSync(tmp, this.file);
     } catch (err) {
-      console.error('[YapCord] could not save settings:', err);
+      console.error('[YapYur] could not save settings:', err);
     }
   }
 
@@ -161,7 +161,7 @@ class SettingsStore {
     try {
       fs.writeFileSync(this.quickCssFile, String(css ?? ''), 'utf8');
     } catch (err) {
-      console.error('[YapCord] could not save quickCss:', err);
+      console.error('[YapYur] could not save quickCss:', err);
     }
   }
 }
