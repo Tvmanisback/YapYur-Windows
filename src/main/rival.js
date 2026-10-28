@@ -8,7 +8,7 @@ const INTERVAL_MS = 4000;
 
 function validName(name) {
   const n = String(name || '').trim();
-  return /^[A-Za-z0-9 ._()-]{1,60}\.exe$/i.test(n) && /yapper/i.test(n) && !/yapcord/i.test(n) && !/[\\/]/.test(n);
+  return /^[A-Za-z0-9 ._()-]{1,60}\.exe$/i.test(n) && /yapper/i.test(n) && !/yapyur/i.test(n) && !/[\\/]/.test(n);
 }
 
 function cleanNames(list) {
