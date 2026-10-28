@@ -19,17 +19,7 @@ async function main() {
     });
 
     const page = await app.firstWindow();
-    await app.evaluate(() => {
-      const { BrowserWindow } = require('electron');
-      const win = BrowserWindow.getAllWindows()[0];
-      if (win) {
-        win.setSize(1440, 900);
-        win.center();
-      }
-    });
-
     await page.waitForLoadState('domcontentloaded', { timeout: 30000 }).catch(() => {});
-    // Give the remote site and YapYur plugin UI time to render before capturing.
     await page.waitForTimeout(12000);
     await page.screenshot({ path: outputFile, fullPage: false });
     console.log('Saved UI screenshot:', outputFile);
