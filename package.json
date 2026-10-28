@@ -1,5 +1,5 @@
 {
-  "name": "yapyur-windows",
+  "name": "tvman-unknown-yapyur",
   "productName": "YapYur",
   "version": "1.33.5",
   "description": "YapYur Windows desktop client with plugin, theme and settings support",
@@ -31,10 +31,11 @@
       "src/**/*",
       "themes/**/*",
       "build/icon.png",
+      "build/icon.ico",
       "package.json"
     ],
     "win": {
-      "icon": "build/icon.png",
+      "icon": "build/icon.ico",
       "target": [
         "portable"
       ]
@@ -53,5 +54,6 @@
   },
   "yapyur": {
     "updateRepo": "Tvmanisback/YapYur-Windows"
-  }
+  },
+  "appId": "tvman.unknown.yapyur"
 }
