@@ -28,10 +28,10 @@ function compareVersions(a, b) {
 
 const validRepo = (r) => typeof r === 'string' && /^[A-Za-z0-9_.-]{1,100}\/[A-Za-z0-9_.-]{1,100}$/.test(r.trim());
 
-const PLATFORM_REPOS = { win32: 'tariksabanuz/YapCord-Windows', linux: 'tariksabanuz/YapCord-Linux', darwin: 'tariksabanuz/YapCord-MacOS' };
+const PLATFORM_REPOS = { win32: 'tariksabanuz/YapYur-Windows', linux: 'tariksabanuz/YapYur-Linux', darwin: 'tariksabanuz/YapYur-MacOS' };
 
 function defaultRepoForPlatform(ownPkg, platform) {
-  return PLATFORM_REPOS[platform] || (ownPkg && ownPkg.yapcord && ownPkg.yapcord.updateRepo) || '';
+  return PLATFORM_REPOS[platform] || (ownPkg && ownPkg.yapyur && ownPkg.yapyur.updateRepo) || '';
 }
 
 function normaliseRepo(input) {
@@ -97,7 +97,7 @@ class Updater extends EventEmitter {
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), timeout);
     try {
-      const res = await this.fetch(url, { headers: { Accept: accept || 'application/vnd.github+json', 'User-Agent': 'YapCord-Updater' }, redirect: 'follow', signal: ctl.signal });
+      const res = await this.fetch(url, { headers: { Accept: accept || 'application/vnd.github+json', 'User-Agent': 'YapYur-Updater' }, redirect: 'follow', signal: ctl.signal });
       if (res.url) this._checkUrl(res.url);
       return res;
     } catch (err) {
@@ -120,7 +120,7 @@ class Updater extends EventEmitter {
     if (rel.ok) {
       const j = await rel.json();
       const version = String(j.tag_name || '').replace(/^v/i, '');
-      const asset = Array.isArray(j.assets) ? j.assets.find((a) => a && /^yapcord.*\.zip$/i.test(a.name || '') && a.browser_download_url) : null;
+      const asset = Array.isArray(j.assets) ? j.assets.find((a) => a && /^yapyur.*\.zip$/i.test(a.name || '') && a.browser_download_url) : null;
       // A release asset's browser_download_url is a direct CDN link and wants Accept: application/octet-stream
       // to get the raw bytes back. GitHub's own /zipball/<ref> endpoint (used as a fallback below, and here when
       // a release exists but has no matching named asset) is a normal api.github.com endpoint, not a CDN link -
@@ -205,8 +205,8 @@ class Updater extends EventEmitter {
 
   _validate(dir) {
     let pkg;
-    try { pkg = JSON.parse(fs.readFileSync(path.join(dir, 'package.json'), 'utf8')); } catch (_) { throw new Error('The download is not a YapCord package.'); }
-    if (pkg.name !== 'yapcord') throw new Error('The download is not a YapCord package.');
+    try { pkg = JSON.parse(fs.readFileSync(path.join(dir, 'package.json'), 'utf8')); } catch (_) { throw new Error('The download is not a YapYur package.'); }
+    if (pkg.name !== 'yapyur') throw new Error('The download is not a YapYur package.');
     if (compareVersions(pkg.version, this.current) <= 0) throw new Error('The download is not newer than the version you have.');
     for (const f of REQUIRED_FILES) if (!fs.existsSync(path.join(dir, f))) throw new Error('The download is incomplete (' + f + ' is missing).');
     return pkg.version;
