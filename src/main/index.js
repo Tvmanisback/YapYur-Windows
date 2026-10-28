@@ -156,6 +156,10 @@ function main() {
     if (b.maximized) win.maximize();
 
     const wc = win.webContents;
+    win.on('page-title-updated', (event) => {
+      event.preventDefault();
+      if (win && !win.isDestroyed()) win.setTitle('YapYur');
+    });
     wc.setUserAgent(wc.getUserAgent().replace(/ (YapYur|YapperMod)\/\S+/g, '') + ' YapYur/' + app.getVersion());
 
     wc.setWindowOpenHandler(({ url }) => {
