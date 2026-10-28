@@ -50,7 +50,10 @@ jobs:
       - name: Build portable EXE
         run: npm run dist
 
-      - name: Capture YapYur UI screenshot
+      - name: Stage installer/patcher UI for screenshot
+        run: npm run dist:installer -- --stage-only
+
+      - name: Capture installer/patcher UI screenshot
         shell: pwsh
         run: |
           npm install --no-save playwright
