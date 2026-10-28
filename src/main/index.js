@@ -15,8 +15,8 @@ const { makeRivalGuard } = require('./rival');
 const { AppIcon } = require('./appicon');
 const { Updater, defaultRepoForPlatform } = require('./updater');
 
-app.setName('YapCord');
-if (process.platform === 'win32') app.setAppUserModelId('dev.yapcord.app');
+app.setName('YapYur');
+if (process.platform === 'win32') app.setAppUserModelId('tvman.unknown.yapyur');
 
 const dataLocation = resolveDataDir(app.getPath('appData'));
 const dataDir = dataLocation.dir;
@@ -140,7 +140,7 @@ function main() {
       minHeight: 480,
       show: false,
       backgroundColor: '#141519',
-      title: 'Yapper',
+      title: 'YapYur',
       icon: C.ICON,
       autoHideMenuBar: true,
       webPreferences: {
@@ -156,7 +156,7 @@ function main() {
     if (b.maximized) win.maximize();
 
     const wc = win.webContents;
-    wc.setUserAgent(wc.getUserAgent().replace(/ (YapCord|YapperMod)\/\S+/g, '') + ' YapCord/' + app.getVersion());
+    wc.setUserAgent(wc.getUserAgent().replace(/ (YapYur|YapperMod)\/\S+/g, '') + ' YapYur/' + app.getVersion());
 
     wc.setWindowOpenHandler(({ url }) => {
       openExternalSafe(url);
@@ -184,7 +184,7 @@ function main() {
       const message = String(event && event.message !== undefined ? event.message : legacyMessage || '');
       const level = event && event.level !== undefined ? event.level : legacyLevel;
       const isError = level === 'error' || level === 3;
-      if (isError && /YapCord|YapperMod/.test(message)) log.error('[page]', message);
+      if (isError && /YapYur|YapperMod/.test(message)) log.error('[page]', message);
     });
     attachContextMenu(wc, { getWindow, settings, openExternal: openExternalSafe });
 
@@ -235,11 +235,11 @@ function main() {
       const original = img.resize({ width: 16, height: 16 });
       tray = new Tray(appIcon.trayImage() || original);
       appIcon.attachTray(tray, original);
-      tray.setToolTip('Yapper');
+      tray.setToolTip('YapYur');
       tray.setContextMenu(
         Menu.buildFromTemplate([
-          { label: 'Open Yapper', click: showWindow },
-          { label: 'YapCord settings', click: () => { showWindow(); openModSettings(); } },
+          { label: 'Open YapYur', click: showWindow },
+          { label: 'YapYur settings', click: () => { showWindow(); openModSettings(); } },
           { type: 'separator' },
           { label: 'Quit', click: () => app.quit() },
         ]),
@@ -276,7 +276,7 @@ function main() {
         {
           label: 'File',
           submenu: [
-            { label: 'YapCord settings', accelerator: 'CmdOrCtrl+,', click: openModSettings },
+            { label: 'YapYur settings', accelerator: 'CmdOrCtrl+,', click: openModSettings },
             { label: 'Open data folder', click: () => shell.openPath(dataDir) },
             { label: 'Open themes folder', click: () => shell.openPath(themes.dir) },
             { type: 'separator' },
@@ -307,7 +307,7 @@ function main() {
 
   app.whenReady().then(() => {
     log.init(path.join(dataDir, 'logs'));
-    log.info('YapCord ' + app.getVersion() + ' starting (electron ' + process.versions.electron + ')');
+    log.info('YapYur ' + app.getVersion() + ' starting (electron ' + process.versions.electron + ')');
     if (dataLocation.migrated) log.info('moved the data folder from YapperMod to YapCord');
     if (dataLocation.legacy) log.warn('could not move the old YapperMod data folder (is the old app still running?), using it as it is:', dataLocation.error && dataLocation.error.message);
 
@@ -321,7 +321,7 @@ function main() {
 
     rival = makeRivalGuard({
       execFile: require('child_process').execFile,
-      ownNames: ['YapCord.exe'],
+      ownNames: ['YapYur.exe'],
       log,
       getConfig: () => {
         const w = settings.get().window || {};
