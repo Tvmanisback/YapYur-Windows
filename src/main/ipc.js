@@ -196,7 +196,7 @@ function registerIpc(ctx) {
     const themeFiles = {};
     for (const t of themes.list()) themeFiles[t.fileName] = themes.read(t.fileName);
     const payload = {
-      format: 'yapcord-backup',
+      format: 'yapyur-backup',
       version: 1,
       createdAt: new Date().toISOString(),
       settings: settings.get(),
@@ -204,8 +204,8 @@ function registerIpc(ctx) {
       themes: themeFiles,
     };
     const res = await dialog.showSaveDialog(win, {
-      title: 'Export YapCord settings',
-      defaultPath: 'yapcord-backup.json',
+      title: 'Export YapYur settings',
+      defaultPath: 'yapyur-backup.json',
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
     if (res.canceled || !res.filePath) return false;
@@ -216,7 +216,7 @@ function registerIpc(ctx) {
   handle('ym:backup:import', async () => {
     const win = getWindow();
     const res = await dialog.showOpenDialog(win, {
-      title: 'Import YapCord settings',
+      title: 'Import YapYur settings',
       properties: ['openFile'],
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
@@ -227,8 +227,8 @@ function registerIpc(ctx) {
     } catch (_) {
       return { ok: false, reason: 'That file is not valid JSON.' };
     }
-    if (!data || !['yapcord-backup', 'yappermod-backup'].includes(data.format) || typeof data.settings !== 'object') {
-      return { ok: false, reason: 'That is not a YapCord backup.' };
+    if (!data || !['yapyur-backup', 'yappermod-backup'].includes(data.format) || typeof data.settings !== 'object') {
+      return { ok: false, reason: 'That is not a YapYur backup.' };
     }
     settings.replace(data.settings);
     settings.flush();
@@ -283,7 +283,7 @@ function registerIpc(ctx) {
     const win = getWindow();
     const res = await dialog.showSaveDialog(win, {
       title: 'Save diagnostics',
-      defaultPath: 'yapcord-diagnostics.json',
+      defaultPath: 'yapyur-diagnostics.json',
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
     if (res.canceled || !res.filePath) return false;
