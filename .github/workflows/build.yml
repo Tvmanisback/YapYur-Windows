@@ -47,13 +47,41 @@ jobs:
           npm install --no-save sharp png-to-ico
           node --input-type=module -e "import sharp from 'sharp'; import pngToIcoModule from 'png-to-ico'; import { writeFile } from 'node:fs/promises'; const pngToIco = pngToIcoModule.default ?? pngToIcoModule; await sharp('build/icon.svg').resize(256, 256).png().toFile('build/icon.png'); await writeFile('build/icon.ico', await pngToIco('build/icon.png'));"
 
+      - name: Download and integrate plugins from the YapYur ZIP source
+        shell: pwsh
+        run: |
+          $pluginUrl = "https://raw.githubusercontent.com/Tvmanisback/yapyur-download/1.10.3/UserScript/YapYur.user.js"
+          Invoke-WebRequest -Uri $pluginUrl -OutFile "src/main/yapyur-plugins.js"
+          $pluginSource = [System.IO.File]::ReadAllText("src/main/yapyur-plugins.js")
+          $pluginSource = $pluginSource.Replace("window.YapperMod = YM;", "window.YapYurPlugins = YM;")
+          $pluginSource = $pluginSource.Replace("YM.mode = 'bookmarklet';", "YM.mode = 'desktop';")
+          $pluginSource = $pluginSource.Replace("if (!def || !def.name) return null;", "if (!def || !def.name) return null;`n    if (def.name === 'MessageLogger' || def.name === 'BetterFolders') return null;")
+          [System.IO.File]::WriteAllText("src/main/yapyur-plugins.js", $pluginSource, [System.Text.UTF8Encoding]::new($false))
+
       - name: Build portable EXE
         run: npm run dist
 
-      - name: Upload EXE
+      - name: Capture YapYur UI screenshot
+        shell: pwsh
+        run: |
+          npm install --no-save playwright
+          node tools/capture-ui.cjs
+
+      - name: Assemble release folder
+        shell: pwsh
+        run: |
+          $releaseDir = "YapYur-Release"
+          New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
+          $exe = Get-ChildItem "dist" -Filter "*.exe" -File | Select-Object -First 1
+          if (-not $exe) { throw "No portable EXE was created in dist/" }
+          Copy-Item $exe.FullName (Join-Path $releaseDir $exe.Name) -Force
+          $screenshot = Join-Path $releaseDir "ui screen shots/YapYur.png"
+          if (-not (Test-Path $screenshot)) { throw "UI screenshot missing: $screenshot" }
+
+      - name: Upload release folder
         uses: actions/upload-artifact@v4
         with:
-          name: YapYur-Windows-EXE
-          path: dist/*.exe
+          name: YapYur-Windows-Release
+          path: YapYur-Release/
           if-no-files-found: error
           retention-days: 14
