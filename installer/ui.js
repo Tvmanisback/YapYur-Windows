@@ -5,10 +5,9 @@
   let installs = [];
   let selected = '';
   let busy = false;
-  let version = '';
+  const version = '1.10.3';
 
-  const nameOf = (i) => 'Yapper (' + (i.patched ? 'YapCord installed' : 'YapCord not installed') + ')';
-
+  const nameOf = (i) => 'Yapper (' + (i.patched ? 'YapYur installed' : 'YapYur not installed') + ')';
   function current() { return installs.find((i) => i.dir === selected) || null; }
 
   function showResult(ok, text) {
@@ -90,25 +89,23 @@
     refresh();
     if (res.ok) {
       showResult(true, action === 'uninstall'
-        ? 'Done. YapCord has been removed from Yapper; Yapper is back to how it was.'
-        : 'Done! You can just open Yapper now. You stay logged in. The settings are in Yapper under the gear icon, in the "YapCord" section.');
+        ? 'Done. YapYur has been removed from Yapper; Yapper is back to how it was.'
+        : 'Done! You can just open Yapper now. You stay logged in. The settings are in Yapper under the gear icon, in the "YapYur" section.');
     } else {
       showResult(false, res.error || 'Something went wrong.');
     }
   }
 
   async function init() {
-    $('foot').textContent = 'YapCord Installer';
+    $('foot').textContent = 'YapYur Installer v' + version;
     let info;
     try { info = await api.info(); } catch (err) { showResult(false, 'Cannot start the installer: ' + ((err && err.message) || err)); return; }
-    version = info.version || '';
     installs = info.installs || [];
     selected = (installs[0] || {}).dir || '';
     $('notice').textContent = info.repo
-      ? 'github.com/' + info.repo + ' is the only official place to get YapCord. If you got this program from anywhere else, delete it and download it again.'
-      : 'Only download YapCord from its maker. If you got this program from anywhere else, delete it.';
-    $('foot').textContent = 'YapCord ' + version + (info.payloadOk ? '' : ' (files missing from this program)');
-    if (!info.payloadOk) showResult(false, 'The YapCord files are missing from this installer. Download it again.');
+      ? 'github.com/' + info.repo + ' is the only official place to get YapYur. If you got this program from anywhere else, delete it and download it again.'
+      : 'Only download YapYur from its maker. If you got this program from anywhere else, delete it.';
+    if (!info.payloadOk) showResult(false, 'The YapYur files are missing from this installer. Download it again.');
     refresh();
   }
 
