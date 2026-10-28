@@ -1,15 +1,12 @@
 {
-  "name": "yapcord",
-  "productName": "YapCord",
+  "name": "yapyur-windows",
+  "productName": "YapYur",
   "version": "1.33.5",
-  "description": "Yapper desktop client with a Vencord-style plugin, theme and settings system",
+  "description": "YapYur Windows desktop client with plugin, theme and settings support",
   "main": "src/main/index.js",
-  "author": "YapCord contributors",
+  "author": "Tvmanisback",
   "license": "GPL-3.0-or-later",
   "private": true,
-  "yapcord": {
-    "updateRepo": "tariksabanuz/YapCord-Windows"
-  },
   "scripts": {
     "start": "electron .",
     "dist": "npx --yes electron-builder --win portable",
@@ -24,12 +21,37 @@
     "electron": "^38.0.0"
   },
   "build": {
-    "appId": "dev.yapcord.app",
-    "productName": "YapCord",
-    "directories": { "output": "dist", "buildResources": "build" },
-    "files": ["src/**/*", "themes/**/*", "build/icon.png", "package.json"],
-    "win": { "icon": "build/icon.png", "target": ["portable"] },
-    "portable": { "artifactName": "YapCord-${version}-portable.exe" },
-    "linux": { "icon": "build/icon.png", "target": ["AppImage"], "category": "Network", "artifactName": "YapCord-${version}.AppImage" }
+    "appId": "tvman.unknown.yapyur",
+    "productName": "YapYur",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "themes/**/*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        "portable"
+      ]
+    },
+    "portable": {
+      "artifactName": "YapYur-${version}-portable.exe"
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "target": [
+        "AppImage"
+      ],
+      "category": "Network",
+      "artifactName": "YapYur-${version}.AppImage"
+    }
+  },
+  "yapyur": {
+    "updateRepo": "Tvmanisback/YapYur-Windows"
   }
 }
