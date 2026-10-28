@@ -35,4 +35,4 @@ if (YM.official) {
     }
   }, true);
 }
-YM.log.info('YapCord ' + YM.version + ' loaded' + (YM.inApp ? '' : ' (outside the app)'));
+YM.log.info('YapYur ' + YM.version + ' loaded' + (YM.inApp ? '' : ' (outside the app)'));
