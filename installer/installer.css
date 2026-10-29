@@ -45,3 +45,9 @@ h2 { font-weight: 600; font-size: 17px; color: #cfd6dd; }
 .result { border-radius: 12px; }
 .log { border-radius: 12px; background: #0f1317; }
 @media (prefers-reduced-motion: reduce) { .btn, .install { transition: none; } }
+
+.credits { margin-top: 22px; padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; font-size: 14px; }
+.credits h2 { margin: 0 0 8px; }
+.credits p { margin: 5px 0; }
+.credits a { color: #ff9b83; text-decoration: underline; }
+.credits a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
