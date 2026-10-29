@@ -5,7 +5,7 @@ const h = YM.dom.h;
 const fill = (el, ...kids) => el.replaceChildren(...kids.flat(Infinity).filter((k) => k !== null && k !== undefined && k !== false));
 
 const PAGES = [
-  { id: 'main', label: 'YapCord' },
+  { id: 'main', label: 'YapYur' },
   { id: 'plugins', label: 'Plugins' },
   { id: 'alwayson', label: 'Always-on' },
   { id: 'themes', label: 'Themes' },
@@ -154,14 +154,14 @@ function restartBanner() {
 function banner() {
   return h('div', { class: 'ym-banner' },
     h('div', { class: 'ym-banner-text' },
-      h('b', {}, 'YapCord'),
+      h('b', {}, 'YapYur'),
       h('span', {}, 'An unofficial mod for Yapper - plugins, themes and Custom CSS, inspired by Vencord.')));
 }
 
 function quickActions() {
   const items = [
     { label: 'Edit Custom CSS', onClick: () => activate('quickcss') },
-    { label: 'Reload YapCord', onClick: () => YM.native.app.reload() },
+    { label: 'Reload YapYur', onClick: () => YM.native.app.reload() },
     { label: 'Open Settings Folder', onClick: () => YM.native.openPath('data') },
     { label: 'Open Themes Folder', onClick: () => YM.native.openPath('themes') },
   ];
@@ -204,13 +204,19 @@ function pageMain(root) {
   }
 
   root.append(
-    h('div', { class: 'ym-page-head' }, h('h2', {}, 'YapCord')),
+    h('div', { class: 'ym-page-head' }, h('h2', {}, 'YapYur')),
     restartBanner(),
     banner(),
     h('h3', {}, 'Quick Actions'),
     quickActions(),
     h('h3', {}, 'Settings'),
-    ...settingsRows);
+    ...settingsRows,
+    section('Credits',
+      h('p', { class: 'hint' }, 'YapYur — YapCord port by Tvman.'),
+      h('p', { class: 'hint' }, 'YapCord — originally by lll.'),
+      h('div', { class: 'ym-toolbar' },
+        btn('YapYur community', () => YM.native.openExternal('https://yapin.gg/invite/YapYur'), 'ym-btn-small'),
+        btn('YapCord community', () => YM.native.openExternal('https://yapin.gg/invite/YapCords'), 'ym-btn-small'))));
 
 }
 
